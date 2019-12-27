@@ -49,9 +49,10 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSo
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
-
-import groovy.json.internal.ValueMap;
-import groovy.json.internal.ValueMapImpl;
+import org.apache.jena.sparql.expr.E_Equals;
+import org.apache.tinkerpop.gremlin.process.traversal.P;
+//import groovy.json.internal.ValueMap;
+//import groovy.json.internal.ValueMapImpl;
 
 // TODO: implement OpVisitor, don't extend OpVisitorBase
 public class SparqlToGremlinCompiler extends OpVisitorBase {
@@ -62,7 +63,8 @@ public class SparqlToGremlinCompiler extends OpVisitorBase {
 	List<Traversal> traversalList = new ArrayList<Traversal>();
 	List<Traversal> optionalTraversals = new ArrayList<Traversal>();
 	List<String> optionalVariable = new ArrayList<String>(); 
-	
+	List<Triple> triples = new ArrayList<Triple>();
+    List<Triple> temp_triples = new ArrayList<Triple>();
 	boolean optionalFlag = false;
 
 	String groupVariable = "";
@@ -342,7 +344,7 @@ public class SparqlToGremlinCompiler extends OpVisitorBase {
 		{
 
 			System.out.println("Inside opBGP ---------------------------------------------->");
-			final List<Triple> triples = opBGP.getPattern().getList();
+			triples = opBGP.getPattern().getList();
 			final Traversal[] matchTraversals = new Traversal[triples.size()];
 			int i = 0;
 			for (final Triple triple : triples) {
@@ -365,13 +367,12 @@ public class SparqlToGremlinCompiler extends OpVisitorBase {
 	// VISITING SPARQL ALGEBRA OP FILTER - MAYBE
 	@Override
 	public void visit(final OpFilter opFilter) {
-
+       
 		System.out.println("Inside opFilter ---------------------------------------------->");
 		Traversal traversal = null;
 		for (Expr expr : opFilter.getExprs().getList()) {
 			if (expr != null) {
-				traversal = __.where(WhereTraversalBuilder.transform(expr));
-				traversalList.add(traversal);
+				traversalList.add(WhereTraversalBuilder.transform(expr, triples));
 			}
 		}
 
@@ -393,7 +394,7 @@ public class SparqlToGremlinCompiler extends OpVisitorBase {
 		if (opLeftJoin.getExprs() != null) {
 			for (Expr expr : opLeftJoin.getExprs().getList()) {
 				if (expr != null) {
-					optTraversal = __.where(WhereTraversalBuilder.transform(expr));
+					//optTraversal = WhereTraversalBuilder.transform(expr);
 					System.out.println("Visiting optional filter=============");
 					if (optionalFlag)
 						optionalTraversals.add(optTraversal);

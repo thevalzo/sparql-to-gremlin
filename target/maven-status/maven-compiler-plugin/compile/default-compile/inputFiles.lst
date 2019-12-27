@@ -1,6 +1,6 @@
-/Users/harshthakkar/github/sparql-gremlin-latest/sparql-to-gremlin/src/main/java/com/datastax/sparql/gremlin/TraversalBuilder.java
-/Users/harshthakkar/github/sparql-gremlin-latest/sparql-to-gremlin/src/main/java/com/datastax/sparql/gremlin/Prefixes.java
-/Users/harshthakkar/github/sparql-gremlin-latest/sparql-to-gremlin/src/main/java/com/datastax/sparql/ConsoleCompiler.java
-/Users/harshthakkar/github/sparql-gremlin-latest/sparql-to-gremlin/src/main/java/com/datastax/sparql/gremlin/Runable.java
-/Users/harshthakkar/github/sparql-gremlin-latest/sparql-to-gremlin/src/main/java/com/datastax/sparql/gremlin/WhereTraversalBuilder.java
-/Users/harshthakkar/github/sparql-gremlin-latest/sparql-to-gremlin/src/main/java/com/datastax/sparql/gremlin/SparqlToGremlinCompiler.java
+/opt/janusgraph/janusgraph-0.3.1-hadoop2/sparql-gremlin/sparql-to-gremlin/src/main/java/com/datastax/sparql/gremlin/Runable.java
+/opt/janusgraph/janusgraph-0.3.1-hadoop2/sparql-gremlin/sparql-to-gremlin/src/main/java/com/datastax/sparql/gremlin/Prefixes.java
+/opt/janusgraph/janusgraph-0.3.1-hadoop2/sparql-gremlin/sparql-to-gremlin/src/main/java/com/datastax/sparql/gremlin/WhereTraversalBuilder.java
+/opt/janusgraph/janusgraph-0.3.1-hadoop2/sparql-gremlin/sparql-to-gremlin/src/main/java/com/datastax/sparql/gremlin/TraversalBuilder.java
+/opt/janusgraph/janusgraph-0.3.1-hadoop2/sparql-gremlin/sparql-to-gremlin/src/main/java/com/datastax/sparql/gremlin/SparqlToGremlinCompiler.java
+/opt/janusgraph/janusgraph-0.3.1-hadoop2/sparql-gremlin/sparql-to-gremlin/src/main/java/com/datastax/sparql/ConsoleCompiler.java

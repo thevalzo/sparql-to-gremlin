@@ -1,7 +1,9 @@
-SELECT ?name ?fname ?age WHERE {
- 
-  ?person v:name ?name .
-  ?person e:knows ?friend .
-  ?friend v:name ?fname .
-  OPTIONAL { ?friend v:age ?age . FILTER (?age > 30) . } 
-} 
+SELECT ?a ?b ?c
+WHERE {
+  ?a v:label "person" .
+  ?a e:knows ?b .
+  ?a e:created ?c .
+  ?b e:created ?c .
+  ?a v:age ?d .
+    FILTER (?d < 30)
+}

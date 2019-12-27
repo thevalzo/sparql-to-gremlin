@@ -36,7 +36,7 @@ class TraversalBuilder {
         final String uri = predicate.getURI();
         final String uriValue = Prefixes.getURIValue(uri);
         final String prefix = Prefixes.getPrefix(uri);
-
+        //System.out.print(uriValue);
         switch (prefix) {
             case "edge":
                 return matchTraversal.out(uriValue).as(triple.getObject().getName());
@@ -53,30 +53,37 @@ class TraversalBuilder {
                                                       final PropertyType type, final Node object) {
         switch (propertyName) {
             case "id":
-         
+                System.out.println("id");
                 return object.isConcrete()
                         ? traversal.hasId(object.getLiteralValue())
                         : traversal.id().as(object.getName());
             case "label":
-            	
+            	System.out.println("label");
                 return object.isConcrete()
                         ? traversal.hasLabel(object.getLiteralValue().toString())
                         : traversal.label().as(object.getName());
             	
             case "key":
+                System.out.println("key");
                 return object.isConcrete()
                         ? traversal.hasKey(object.getLiteralValue().toString())
                         : traversal.key().as(object.getName());
             case "value":
+                System.out.println("value");
                 return object.isConcrete()
-                        ? traversal.hasValue(object.getLiteralValue().toString())
+                        //? traversal.hasValue(object.getLiteralValue().toString())
+						? traversal.has(propertyName, object.getLiteralValue().toString())
                         : traversal.value().as(object.getName());
             default:
+                System.out.println("default");
                 if (type.equals(PropertyType.PROPERTY)) {
-                    return traversal.properties(propertyName).as(object.getName());
+                    return traversal.has(propertyName, object.getLiteralValue().toString());
+                    //return traversal.properties(propertyName).as(object.getName());
                 } else {
+                   
                     return object.isConcrete()
-                            ? traversal.values(propertyName).is(object.getLiteralValue())
+                            //? traversal.values(propertyName).is(object.getLiteralValue())
+                            ? traversal.has(propertyName, object.getLiteralValue().toString())
                             : traversal.values(propertyName).as(object.getName());
                 }
         }

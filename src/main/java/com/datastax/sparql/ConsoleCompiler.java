@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.logging.*;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -42,6 +43,7 @@ import org.apache.tinkerpop.gremlin.structure.io.IoCore;
 import org.apache.tinkerpop.gremlin.structure.util.GraphFactory;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerFactory;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
+import org.janusgraph.core.JanusGraphFactory;
 
 import com.datastax.sparql.gremlin.SparqlToGremlinCompiler;
 
@@ -64,7 +66,6 @@ class ConsoleCompiler {
             printHelp(1);
             return;
         }
-        
         final InputStream inputStream = commandLine.hasOption("file")
                 ? new FileInputStream(commandLine.getOptionValue("file"))
                 : System.in;
@@ -95,6 +96,8 @@ class ConsoleCompiler {
                 case "crew":
                     graph = TinkerFactory.createTheCrew();
                     break;
+                case "janusgraph":
+                	graph = JanusGraphFactory.open("conf/janusgraph-hbase-es.properties");
                 default:
                     graph = TinkerGraph.open();
                     System.out.println("Graph Created");
@@ -109,8 +112,11 @@ class ConsoleCompiler {
                     break;
             }
         } else {
- 
-            graph = TinkerFactory.createModern();
+            Logger.getLogger("org.apache.zookeeper").setLevel(Level.WARNING);
+            Logger.getLogger("org.janusgraph.diskstorage").setLevel(Level.WARNING);
+        	graph = JanusGraphFactory.open("conf/janusgraph-hbase-es.properties");
+            Logger.getLogger("org.apache.zookeeper").setLevel(Level.WARNING);
+        	Logger.getLogger("o.j.d").setLevel(Level.WARNING);
         }
 
         long startTime = System.currentTimeMillis();
@@ -133,6 +139,8 @@ class ConsoleCompiler {
         printWithHeadline("Result", String.join(System.lineSeparator(),JavaTranslator.of(graph.traversal()).translate(traversalByteCode).toStream().map(Object::toString).collect(Collectors.toList())));
         printWithHeadline("Traversal (after execution)", traversal);
         System.out.println("traversal profile : "+ traversal.profile().toList());
+        Logger.getLogger("org.apache.zookeeper").setLevel(Level.WARNING);
+        Logger.getLogger("o.j.d").setLevel(Level.WARNING);
     }
 
     private static void printHelp(final int exitCode) throws IOException {
