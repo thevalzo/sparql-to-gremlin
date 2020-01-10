@@ -71,8 +71,10 @@ class TraversalBuilder {
             case "value":
                 System.out.println("value");
                 return object.isConcrete()
+                        //---MODIFIED FOR BETTER INDICES USE
                         //? traversal.hasValue(object.getLiteralValue().toString())
 						? traversal.has(propertyName, object.getLiteralValue().toString())
+                        //---
                         : traversal.value().as(object.getName());
             default:
                 System.out.println("default");
@@ -82,8 +84,10 @@ class TraversalBuilder {
                 } else {
                    
                     return object.isConcrete()
+                            //---MODIFIED FOR BETTER INDICES USE
                             //? traversal.values(propertyName).is(object.getLiteralValue())
                             ? traversal.has(propertyName, object.getLiteralValue().toString())
+                            //---
                             : traversal.values(propertyName).as(object.getName());
                 }
         }

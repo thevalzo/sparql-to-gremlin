@@ -372,7 +372,10 @@ public class SparqlToGremlinCompiler extends OpVisitorBase {
 		Traversal traversal = null;
 		for (Expr expr : opFilter.getExprs().getList()) {
 			if (expr != null) {
+                
+               
 				traversalList.add(WhereTraversalBuilder.transform(expr, triples));
+  
 			}
 		}
 
@@ -441,30 +444,38 @@ public class SparqlToGremlinCompiler extends OpVisitorBase {
 			// traversal = (GraphTraversal<Vertex, ?>)
 			// traversal.union(unionTemp);
 		} else {
-			Traversal unionTemp1[] = new Traversal[traversalList.size() / 2];
-			Traversal unionTemp2[] = new Traversal[traversalList.size() / 2];
+            //----------ORIGINAL
+			//Traversal unionTemp1[] = new Traversal[traversalList.size() / 2];
+			//Traversal unionTemp2[] = new Traversal[traversalList.size() / 2];
+            
+			//int count = 0;
 
-			int count = 0;
+			//for (int i = 0; i < traversalList.size(); i++) {
 
-			for (int i = 0; i < traversalList.size(); i++) {
+			//	if (i < traversalList.size() / 2) {
 
-				if (i < traversalList.size() / 2) {
-
-					unionTemp1[i] = traversalList.get(i);
-				} else {
-					unionTemp2[count++] = traversalList.get(i);
-				}
-			}
-
-			unionTemp[1] = __.match(unionTemp2);
-			unionTemp[0] = __.match(unionTemp1);
-
-			traversalList.clear();
-			traversal = (GraphTraversal<Vertex, ?>) traversal.union(unionTemp);
+			//		unionTemp1[i] = traversalList.get(i);
+			//	} else {
+			//		unionTemp2[count++] = traversalList.get(i);
+			//	}
+               
+			//}
+			//unionTemp[1] = __.match(unionTemp2);
+            //unionTemp[0] = __.match(unionTemp1);
+            
+			//traversalList.clear();         
+			//traversal = (GraphTraversal<Vertex, ?>) traversal.union(unionTemp);
 			// System.out.println("Getting out from Union -------------------> :
 			// "+traversal);
-			// traversalList.add(__.union(unionTemp));
-			// traversalList.clear();
+
+            //--MODIFIED FOR BETTER INDICES USE, STILL NOT WORKING
+            Traversal orList[] = new Traversal[traversalList.size()];
+            for (int i = 0; i < traversalList.size(); i++) {
+                System.out.println("union:"+ traversalList.get(i).toString());
+              orList[i] = traversalList.get(i).asAdmin().removeStep(0); 
+			}
+            traversal = (GraphTraversal<Vertex, ?>) traversal.or(orList);
+			traversalList.clear();
 		}
 	}
 }

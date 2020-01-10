@@ -112,11 +112,7 @@ class ConsoleCompiler {
                     break;
             }
         } else {
-            Logger.getLogger("org.apache.zookeeper").setLevel(Level.WARNING);
-            Logger.getLogger("org.janusgraph.diskstorage").setLevel(Level.WARNING);
         	graph = JanusGraphFactory.open("conf/janusgraph-hbase-es.properties");
-            Logger.getLogger("org.apache.zookeeper").setLevel(Level.WARNING);
-        	Logger.getLogger("o.j.d").setLevel(Level.WARNING);
         }
 
         long startTime = System.currentTimeMillis();
