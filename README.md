@@ -272,7 +272,7 @@ SELECT * WHERE {
 ### Mixed/complex/aggregation-based queries
 Count the number of projects which have been created by persons under the age of 30 and group them by age. Return only the top two.
 ```sparql
-SELECT COUNT(?project) WHERE {
+SELECT (COUNT(?project) as ?count) WHERE {
   ?person v:label "person" .
   ?person v:age ?age . FILTER (?age < 30)
   ?person e:created ?project .
