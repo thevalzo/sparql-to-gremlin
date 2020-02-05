@@ -43,7 +43,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 
 class WhereTraversalBuilder {
 
-	public static GraphTraversal<?, ?> transform(final E_Equals e, List<Triple> triples) {
+public static GraphTraversal<?, ?> transform(final E_Equals e, List<Triple> triples) {
         GraphTraversal traversal = null;
         //---MODIFIED FOR BETTER INDICES USE
         //For the index optimization you have to find the original BGP where the Filter expression is applied, so you can create a new
